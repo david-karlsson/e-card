@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <form action="submit"> -->
+    <form >
 
     <input
       type="text"
@@ -10,32 +10,67 @@
       @keypress="newCard"
     />
     <input
-      type="text"
+      type="number"
+      min="1"
+      max="100000"
       class="bar"
       placeholder="Card-number"
       v-model="inputNumber"
       @keypress="newCard"
     />
 
-    <!-- </form> -->
+    <input
+      type="date"
+      class="bar"
+      placeholder="Exp date"
+      v-model="inputvalidThru"
+      @keypress="newCard"
+    />
 
-    <article v-if="card !== []">
+    </form>
 
 
-      <span v-bind:key="item.id" v-for="item in card" >
+<form >
+<select v-model="inputDeleteNumber" @select=removeCard()>
+  <option>0</option>
+<option>1</option>
+<option>2</option>
+<option>3</option>
+
+
+</select>
+<label>Remove card number..</label>
+<input type="button" :value=inputDeleteNumber @click= removeCard() id="submit">
+</form>
+
+
+
+    <article v-if="cardList !== []">
+      <span    v-bind:key="item.id" v-for="item in cardList" @click="removeCard() ">
+        <div class="cardList"  ref="cardId" v.bind:id="item.id">
        
-       <div class="card">
-       
-  
 
-  <p class="number"> {{ item.cardNumber }}</p>
-     <p class="name"> {{ item.cardName }}</p>
+        
+          <p class="number">
+            <label> Card number: </label>{{ item.cardNumber }}
+          </p>
 
+          
+      <footer> <p >
+            <label> <small> Exp date:</small></label> {{ item.cardValid }}
+          </p>
+
+           <p class="name">
+            <label><small> Cardholder Name:</small></label
+            >{{ item.cardName }}
+          </p>
+
+<!-- <input type="hidden" value={{item.id}}> -->
+
+          </footer>   
         </div>
       </span>
     </article>
-
-
   </div>
 </template>
 
@@ -47,37 +82,49 @@ export default {
     return {
       inputName: "",
       inputNumber: "",
-      validThru: "",
-      autoInputId:0,
-      card: [
+      inputvalidThru: "",
+      inputDeleteNumber:0,
+      autoInputId: 0,
+      cardList: [
         {
           id: 999,
-          cardNumber: 0,
-          cardName: "test",
-          valid: 0,
+          cardNumber: 123456,
+          cardName: "test person",
+          cardValid: "2021-12-01",
         },
       ],
     };
   },
 
   methods: {
-      
-    
     newCard(e) {
-              
       if (e.key === "Enter") {
+        this.cardList.push({
+          id: this.autoInputId,
+          cardName: this.inputName,
+          cardNumber: this.inputNumber,
+          cardValid: this.inputvalidThru,
+        });
+        this.autoInputId++;
 
-    
-        this.card.push({ 
-            id: this.autoInputId,
-            cardName:this.inputName, 
-            cardNumber:this.inputNumber
-            });
-            this.autoInputId++
+var color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+document.body.style.backgroundColor =color
 
-                console.log(this.card) 
       }
+
     },
+
+
+    removeCard(){
+      //   console.log( document.getElementById("submit").value);
+      // console.log(this.$refs.cardId)
+
+      var cardRemoveId = document.getElementById("submit").value
+
+
+        this.cardList.splice(cardRemoveId,1)
+
+    }
   },
 };
 </script>
@@ -88,10 +135,27 @@ export default {
 
 
 <style scoped>
-.card {
- width: 20rem;
- height: 10rem;
- display: flex;
+
+
+form{
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  max-width: 50vw;
+}
+
+input{
+
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.cardList {
+    text-align: center;
+  max-width: 20rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
   background: linear-gradient(
       248.3deg,
       rgba(255, 255, 255, 0.24) 0%,
@@ -100,32 +164,50 @@ export default {
     #d0d0d0;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
+  margin: 1rem;
+  
+}
+
+label {
+  font-size: 12px;
+
+
 }
 
 .name {
-
-    padding-top: 1rem;
+  padding: 1rem;
   font-family: PT Mono;
   font-style: normal;
   font-weight: normal;
-  font-size: 18px;
+   font-size: 12px;
   line-height: 20px;
   display: flex;
   align-items: center;
   text-transform: uppercase;
-
+flex-direction: column;
   color: #000000;
 }
 
+.number {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding: 0.5rem ;
+  font-family: PT Mono;
+  font-style: normal;
+  font-weight: normal;
+   font-size: 1.2rem;
+  letter-spacing: 0.03em;
+  text-align: center;
+}
 
-.number{
-     padding: 1rem;
-    font-family: PT Mono;
-font-style: normal;
-font-weight: normal;
-font-size: 29px;
-line-height: 32px;
-letter-spacing: 0.03em;
+small {
+  padding: 0.5rem;
+}
 
+
+footer{
+    display: flex;
+    text-align: center;
 }
 </style>
