@@ -30,19 +30,30 @@
     </form>
 
 
-<form >
-  <label for="cardNumber">Remove card number:</label>
-<select name="cardNumber" v-model="inputDeleteNumber" @select=removeCard()>
+<!-- ------------------------------------ -->
+
+
+<!--      Delete Form -->
+
+
+<!-- ------------------------------------ -->
+
+
+
+
+<form  v-on:submit.prevent="onSubmit">
+  <label for="cardNumber">Select card to remove:</label>
+<select name="cardNumber" v-model="inputDeleteNumber">
   
-  <option>0</option>
+  <option >0</option >
 <option>1</option>
 <option>2</option>
 <option>3</option>
 
 
 </select>
-
-<input type="button" :value=inputDeleteNumber @click= removeCard() id="submitCardNumber"/>
+<button :value=inputDeleteNumber  @click= removeCard() id="submitCardNumber">Remove Selected Card</button>
+<!-- <input type="button" /> -->
 </form>
 
 
@@ -135,10 +146,25 @@ this.newColor= this.randomColor.slice(-1);
     },
 
 
+
+
+
+
+// ------------------------------
+
+
+// Remove card Method
+
+
+// ----------------------------
+
+
+
+
+
     removeCard(){
       //   console.log( document.getElementById("submit").value);
       // console.log(this.$refs.cardId)
-
       var cardRemoveId = document.getElementById("submitCardNumber").value
 
 
@@ -165,11 +191,14 @@ form{
   background-color: rgba(255, 255, 255, 0.9);
 }
 
-input,select{
+input,select,button{
 
   padding: 1rem;
   margin: 1rem;
   background: lightgoldenrodyellow ;
+  border:1px solid darkslategray;
+border-radius: 5px;
+
 }
 
 .card {
@@ -180,13 +209,14 @@ input,select{
   flex-wrap: nowrap;
   background: linear-gradient(
       248.3deg,
-      rgba(255, 255, 255, 0.24) 0%,
-      rgba(255, 255, 255, 0) 100%
+      rgba(255, 255, 255, 0.295) 0%,
+      rgba(243, 214, 214, 0.486) 100%
     ),
     #d0d0d0;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
   margin: 1rem;
+  color: #132;
   
 }
 
@@ -239,7 +269,6 @@ label {
   align-items: center;
   text-transform: uppercase;
 flex-direction: column;
-  color: #000000;
 }
 
 .number {
