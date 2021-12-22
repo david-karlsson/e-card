@@ -1,7 +1,7 @@
 <template>
   <div>
     <form >
-
+<sub>Hit Enter to create a new card.</sub>
     <input
       type="text"
       class="bar"
@@ -31,7 +31,9 @@
 
 
 <form >
-<select v-model="inputDeleteNumber" @select=removeCard()>
+  <label for="cardNumber">Remove card number:</label>
+<select name="cardNumber" v-model="inputDeleteNumber" @select=removeCard()>
+  
   <option>0</option>
 <option>1</option>
 <option>2</option>
@@ -39,8 +41,8 @@
 
 
 </select>
-<label>Remove card number..</label>
-<input type="button" :value=inputDeleteNumber @click= removeCard() id="submit">
+
+<input type="button" :value=inputDeleteNumber @click= removeCard() id="submitCardNumber"/>
 </form>
 
 
@@ -137,7 +139,7 @@ this.newColor= this.randomColor.slice(-1);
       //   console.log( document.getElementById("submit").value);
       // console.log(this.$refs.cardId)
 
-      var cardRemoveId = document.getElementById("submit").value
+      var cardRemoveId = document.getElementById("submitCardNumber").value
 
 
         this.cardList.splice([cardRemoveId],1)
@@ -160,12 +162,14 @@ form{
   flex-direction: column;
   padding: 1rem;
   max-width: 50vw;
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
-input{
+input,select{
 
   padding: 1rem;
   margin: 1rem;
+  background: lightgoldenrodyellow ;
 }
 
 .card {
