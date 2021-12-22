@@ -46,8 +46,8 @@
 
 
     <article v-if="cardList !== []">
-      <span    v-bind:key="item.id" v-for="item in cardList" @click="removeCard() ">
-        <div class="cardList"  ref="cardId" v.bind:id="item.id">
+      <span  v-bind:key="item.id" v-for="item in cardList" @click="removeCard() ">
+        <div    class="card"  ref="cardRef" v.bind:id="item.id"   :style="{backgroundColor:item.cardColor}">
        
 
         
@@ -80,6 +80,8 @@ export default {
   name: "addCard",
   data() {
     return {
+      newColor:'#efg',
+      randomColor:['#789'],
       inputName: "",
       inputNumber: "",
       inputvalidThru: "",
@@ -91,6 +93,7 @@ export default {
           cardNumber: 123456,
           cardName: "test person",
           cardValid: "2021-12-01",
+          cardColor: '#abc'
         },
       ],
     };
@@ -98,17 +101,32 @@ export default {
 
   methods: {
     newCard(e) {
-      if (e.key === "Enter") {
+     
+     
+     var color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+this.randomColor.push(color);
+this.newColor= this.randomColor.slice(-1);
+     
+     if (e.key === "Enter") {
         this.cardList.push({
           id: this.autoInputId,
           cardName: this.inputName,
           cardNumber: this.inputNumber,
           cardValid: this.inputvalidThru,
+          cardColor:this.newColor
         });
         this.autoInputId++;
 
-var color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
-document.body.style.backgroundColor =color
+
+
+
+// var cardRefLast = this.$refs.cardRef.slice(-1) 
+// console.log(cardRefLast)
+// document.cardRefLast.style = this.newColor
+
+
+
+// document.body.style.backgroundColor =color
 
       }
 
@@ -122,7 +140,7 @@ document.body.style.backgroundColor =color
       var cardRemoveId = document.getElementById("submit").value
 
 
-        this.cardList.splice(cardRemoveId,1)
+        this.cardList.splice([cardRemoveId],1)
 
     }
   },
@@ -150,7 +168,7 @@ input{
   margin: 1rem;
 }
 
-.cardList {
+.card {
     text-align: center;
   max-width: 20rem;
   display: flex;
@@ -167,6 +185,38 @@ input{
   margin: 1rem;
   
 }
+
+/* .card:first-of-type{
+background: linear-gradient(
+      248.3deg,
+      rgba(255, 255, 255, 0.24) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    #da6868;
+
+}
+
+.card:nth-of-type(2){
+background: linear-gradient(
+      248.3deg,
+      rgba(255, 255, 255, 0.24) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    #6886da;
+
+}
+
+
+.card:nth-of-type(3){
+background: linear-gradient(
+      248.3deg,
+      rgba(255, 255, 255, 0.24) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    #68dacb;
+
+} */
+
 
 label {
   font-size: 12px;
